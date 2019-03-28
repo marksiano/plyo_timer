@@ -1,0 +1,75 @@
+<html>
+	
+	<head>
+		<style>
+		.container {display: flex; flex-direction: column;}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="container">
+
+		<input type="range" min="1" max="10" value="2" onchange="updateSliderValue()" class="slider" id="minRange">
+		<input type="range" min="1" max="10" value="5" class="slider" onchange="updateSliderValue()" id="maxRange">
+
+		<p id="minText">Min: 2</p>
+		<p id="maxText">Max: 5</p>
+
+		<canvas id="myCanvas" width="300" height="150" style="border:1px solid #d3d3d3;">
+
+		<script type="text/javascript">
+			var c = document.getElementById("myCanvas");
+			var ctx = c.getContext("2d");
+			ctx.rect(20, 20, 150, 100);
+			ctx.stroke();
+
+			function updateSliderValue() {
+				document.getElementById("minText").innerHTML = "Min: " + document.getElementById("minRange").value;
+				document.getElementById("maxText").innerHTML = "Max: " + document.getElementById("maxRange").value;
+			}
+
+			function sleep(milliseconds) {
+			  var start = new Date().getTime();
+			  for (var i = 0; i < 1e7; i++) {
+			    if ((new Date().getTime() - start) > milliseconds){
+			      break;
+			    }
+			  }
+			}
+
+			function fillColor() {
+				ctx.fillStyle = "#FFFFFF";
+				ctx.fillRect(20, 20, 150, 100);
+
+				setTimeout(changeColor, 200);
+			}
+
+			function changeColor() {
+
+				var digit = Math.floor(Math.random() * 2);
+				if (digit == 0) {
+					console.log("Blue");
+					ctx.fillStyle = "#FF0000";
+				} else {
+					console.log("Red");
+					ctx.fillStyle = "#0000FF";
+				}
+
+				ctx.fillRect(20, 20, 150, 100);
+
+				var max = document.getElementById("maxRange").value * 1000;
+				var min = document.getElementById("minRange").value * 1000;
+
+				var interval = Math.random() * (max - min) + min;
+
+				setTimeout(fillColor, interval);
+			}
+
+			fillColor();
+		</script>
+		</canvas>
+
+		</div>
+	</body>
+</html>
